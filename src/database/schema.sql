@@ -27,3 +27,9 @@ CREATE TABLE posts (
     content VARCHAR(300) NOT NULL,
     data_postagem DATE DEFAULT CURRENT_DATE
 );
+
+INSERT INTO users (name, email, photo) VALUES 
+    ('Giovanna Alba', 'giovannaalba@email.com', 'https://avatars.githubusercontent.com/u/162628812?v=4');
+    
+    INSERT INTO users (name, email) VALUES 
+    ('Maria Eduarda', 'mariaeduarda@email.com');
