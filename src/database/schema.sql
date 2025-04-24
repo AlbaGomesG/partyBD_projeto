@@ -28,6 +28,7 @@ CREATE TABLE posts (
     data_postagem DATE DEFAULT CURRENT_DATE
 );
 
+
 INSERT INTO eventos (name_evento, localization, atracao, estilo, horario_inicio, horario_fim)
 VALUES
 ('Festa Sunset', 'Praia do Sol', 'DJ Alex', 'Eletrônica', '16:00', '22:00'),
@@ -98,3 +99,4 @@ VALUES
 (18, 18, 'image18.jpg', 'MPB maravilhosa!'),
 (19, 19, 'image19.jpg', 'Indie inspirador!'),
 (20, 20, 'image20.jpg', 'Carnaval inesquecível!');
+
