@@ -10,4 +10,9 @@ const getEvents = async (estilo) => {
     }
 };
 
-module.exports = {getEvents};
+const getEvent = async (id) => {
+    const result = await pool.query("SELECT * FROM eventos WHERE id = $1", [id]);
+    return result.rows[0];
+};
+
+module.exports = {getEvents, getEvent};
