@@ -13,7 +13,7 @@ const getAllEvents = async (req, res) => {
 const getEventById = async (req, res) => {
     const { id } = req.params;
     try {
-        const event = await EventModel.getEventsById(id);
+        const event = await EventModel.getEvent(id);
         if (!event) {
             return res.status(404).json({ error: 'Evento não encontrado' });
         }
