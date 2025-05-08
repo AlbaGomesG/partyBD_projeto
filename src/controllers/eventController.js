@@ -1,0 +1,62 @@
+const EventModel = require('../models/eventModel');
+
+const getAllEvents = async (req, res) => {
+    try {
+        const { name } = req.query;
+        const events = await EventModel.getEvents(name);
+        res.json(events);
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao buscar eventos' });
+    }
+}
+
+const getEventById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const event = await EventModel.getEventsById(id);
+        if (!event) {
+            return res.status(404).json({ error: 'Evento não encontrado' });
+        }
+        res.json(event);
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao buscar evento' });
+    }
+}
+
+const deleteEvent = async (req, res) => {
+    try {
+        const result = await EventModel.deleteEvents(req.params.id);
+        if (result.error) {
+            return res.status(404).json(result);
+        }
+        res.json(result);
+
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao deletar evento' });
+    }
+}
+
+const updateEvent = async (req, res) => {
+    try {
+        const event = await EventModel.updateEvents(req.params.id, req.body);
+        if (!event) {
+            return res.status(404).json({ message: "Evento não encontrado" });
+        }
+        res.json(event);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erro ao atualizar o evento" });
+    }
+}
+
+const createEvent = async (req, res) => {
+    try {
+        const { name_evento, localization, atracao, estilo, horario_inicio, horario_fim } = req.body;
+        const event = await EventModel.createEvents(name_evento, localization, atracao, estilo, horario_inicio, horario_fim);
+        res.status(201).json(event);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao criar o evento" });
+    }
+}
+
+module.exports = { getAllEvents, getEventById, deleteEvent, updateEvent, createEvent }
