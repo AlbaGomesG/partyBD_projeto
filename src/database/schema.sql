@@ -76,6 +76,7 @@ VALUES
 ('Rodrigo Teixeira', 'rodrigo.teixeira@example.com', 'photo19.jpg'),
 ('Patrícia Gomes', 'patricia.gomes@example.com', 'photo20.jpg');
 
+//nao sao essas fotos
 
 INSERT INTO posts (user_id, evento_id, image, content)
 VALUES
