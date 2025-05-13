@@ -39,16 +39,16 @@ const createEvent = async (req, res) => {
 
 const deleteEvent = async (req, res) => {
     try {
-        const result = await EventModel.deleteEvents(req.params.id);
-        if (result.error) {
-            return res.status(404).json(result);
+        const event = await EventModel.deleteEvent(req.params.id);
+        if (!event) {
+            return res.status(404).json({ message: "Evento não foi encontrado!"});
         }
-        res.json(result);
-
+        return res.status(200).json({ message: "Evento deletado com sucesso!", event });
     } catch (error) {
-        res.status(500).json({ error: 'Erro ao deletar evento' });
+        console.log(error)
+        res.status(500).json({ message: "Erro ao deletar o Evento!"});
     }
-}
+};
 
 const updateEvent = async (req, res) => {
     try {
@@ -64,4 +64,4 @@ const updateEvent = async (req, res) => {
 };
 
 
-module.exports = { getAllEvents, getEventById, createEvent }
+module.exports = { getAllEvents, getEventById, createEvent, deleteEvent }

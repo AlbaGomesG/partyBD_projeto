@@ -1,3 +1,4 @@
+const { rows } = require("pg/lib/defaults");
 const pool = require("../config/database");
 
 const getEvents = async (estilo) => {
@@ -20,5 +21,10 @@ const createEvent = async (name_evento, localization, atracao, estilo, horario_i
     return result.rows[0];
 };
 
+const deleteEvent = async (id) => {
+    const result = await pool.query("DELETE FROM events WHERE id = $1 RETURNING *", [id]);
+    return result.rows[0];
+};
 
-module.exports = {getEvents, getEvent, createEvent};
+
+module.exports = {getEvents, getEvent, createEvent, deleteEvent};
