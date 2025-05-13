@@ -52,16 +52,17 @@ const deleteEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
     try {
-        const event = await EventModel.updateEvents(req.params.id, req.body);
-        if (!event) {
-            return res.status(404).json({ message: "Evento não encontrado" });
+        const { name_evento, localization } = req.body;
+        const updateEvent = await EventModel.updateEvent(req.params.id, name_evento, localization);
+        if (!updateEvent) {
+            return res.status(404).json({ message: "Evento não encontrado!"});
         }
-        res.json(event);
+        res.json(updateEvent);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Erro ao atualizar o evento" });
+        res.status(500).json({ message: "Erro ao atualizar evento!"});
     }
 };
 
 
-module.exports = { getAllEvents, getEventById, createEvent, deleteEvent }
+
+module.exports = { getAllEvents, getEventById, createEvent, deleteEvent, updateEvent }
