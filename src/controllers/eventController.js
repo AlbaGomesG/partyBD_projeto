@@ -13,7 +13,7 @@ const getAllEvents = async (req, res) => {
 const getEventById = async (req, res) => {
     const { id } = req.params;
     try {
-        const event = await EventModel.getEventsById(id);
+        const event = await EventModel.getEvent(id);
         if (!event) {
             return res.status(404).json({ error: 'Evento não encontrado' });
         }
@@ -21,20 +21,34 @@ const getEventById = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar evento' });
     }
-}
+};
+
+const createEvent = async (req, res) => {
+    try {
+        const { name_evento, localization, atracao, estilo, horario_inicio, horario_fim } = req.body;
+        const event = await EventModel.createEvent(name_evento, localization, atracao, estilo, horario_inicio, horario_fim);
+        res.status(201).json(event);
+    } catch (error) {
+        console.error(error)
+        if (error.code === "23505") {
+            return res.status(400).json({ message: "Essa evento já existe!"});
+        }
+        res.status(500).json({ message: "Erro ao criar o evento" });
+    }
+};
 
 const deleteEvent = async (req, res) => {
     try {
-        const result = await EventModel.deleteEvents(req.params.id);
-        if (result.error) {
-            return res.status(404).json(result);
+        const event = await EventModel.deleteEvent(req.params.id);
+        if (!event) {
+            return res.status(404).json({ message: "Evento não foi encontrado!"});
         }
-        res.json(result);
-
+        return res.status(200).json({ message: "Evento deletado com sucesso!", event });
     } catch (error) {
-        res.status(500).json({ error: 'Erro ao deletar evento' });
+        console.log(error)
+        res.status(500).json({ message: "Erro ao deletar o Evento!"});
     }
-}
+};
 
 const updateEvent = async (req, res) => {
     try {
@@ -47,16 +61,7 @@ const updateEvent = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: "Erro ao atualizar o evento" });
     }
-}
+};
 
-const createEvent = async (req, res) => {
-    try {
-        const { name_evento, localization, atracao, estilo, horario_inicio, horario_fim } = req.body;
-        const event = await EventModel.createEvents(name_evento, localization, atracao, estilo, horario_inicio, horario_fim);
-        res.status(201).json(event);
-    } catch (error) {
-        res.status(500).json({ message: "Erro ao criar o evento" });
-    }
-}
 
-module.exports = { getAllEvents, getEventById, deleteEvent, updateEvent, createEvent }
+module.exports = { getAllEvents, getEventById, createEvent, deleteEvent }

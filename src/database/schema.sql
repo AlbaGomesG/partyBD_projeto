@@ -23,12 +23,36 @@ CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE SET NULL,
     evento_id INTEGER NOT NULL REFERENCES eventos(id) ON DELETE SET NULL,
-    image VARCHAR(250) NOT NULL,
+    image TEXT NOT NULL,
     content VARCHAR(300) NOT NULL,
     data_postagem DATE DEFAULT CURRENT_DATE
 );
 
+CREATE TABLE cards(
+    id SERIAL PRIMARY KEY,
+    photo TEXT,
+    name VARCHAR(90) NOT NULL,
+    idade INTEGER,
+    description TEXT,
+    id_categories INTEGER REFERENCES categories(id) ON DELETE CASCADE,
+    id_genres INTEGER REFERENCES genres(id) ON DELETE CASCADE
+);
 
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    style VARCHAR(100) 
+);
+
+CREATE TABLE genres (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+
+
+INSERT INTO eventos (name_evento, localization, atracao, estilo, horario_inicio, horario_fim)
+VALUES
+('Noite do Rock', 'Arena Musical', 'Banda Thunder', 'Rock', '21:00:00', '23:00:00');
 INSERT INTO eventos (name_evento, localization, atracao, estilo, horario_inicio, horario_fim)
 VALUES
 ('Festa Sunset', 'Praia do Sol', 'DJ Alex', 'Eletrônica', '16:00', '22:00'),
@@ -101,3 +125,53 @@ VALUES
 (19, 19, 'image19.jpg', 'Indie inspirador!'),
 (20, 20, 'image20.jpg', 'Carnaval inesquecível!');
 
+
+/* inserts de card de front */
+
+
+INSERT INTO categories (style)
+VALUES
+('Lugares'),
+('Atrações'),
+('Estilos');
+
+
+INSERT INTO genres (name)
+VALUES
+('Samba'),
+('Blues'),
+('Rock'),
+('Pop'),
+('Reggae'),
+('Hip Hop'),
+('Sertanejo'),
+('Latina'),
+('Eletrônica'),
+('Jazz'),
+('Funk'),
+('Clássica'),
+('K-Pop'),
+('Rap'),
+('MPB'),
+('Indie'),
+('Carnaval');
+
+INSERT INTO cards (photo, name, idade, description, id_categories, id_genres)
+VALUES
+('photo1.jpg', 'Card Samba', 25, 'Descrição do card de música samba', 3, 1),
+('photo2.jpg', 'Card Blues', 30, 'Descrição do card de música blues', 3, 2),
+('photo3.jpg', 'Card Rock', 20, 'Descrição do card de música rock', 3, 3),
+('photo4.jpg', 'Card Pop', 22, 'Descrição do card de música pop', 3, 4),
+('photo5.jpg', 'Card Reggae', 28, 'Descrição do card de música reggae', 3, 5),
+('photo6.jpg', 'Card Hip Hop', 24, 'Descrição do card de música hip hop', 3, 6),
+('photo7.jpg', 'Card Sertanejo', 27, 'Descrição do card de música sertaneja', 3, 7),
+('photo8.jpg', 'Card Latina', 26, 'Descrição do card de música latina', 3, 8),
+('photo9.jpg', 'Card Eletrônica', 23, 'Descrição do card de música eletrônica', 3, 9),
+('photo10.jpg', 'Card Jazz', 29, 'Descrição do card de música jazz', 3, 10),
+('photo11.jpg', 'Card Funk', 21, 'Descrição do card de música funk', 3, 11),
+('photo12.jpg', 'Card Clássica', 35, 'Descrição do card de música clássica', 3, 12),
+('photo13.jpg', 'Card K-Pop', 19, 'Descrição do card de música K-Pop', 3, 13),
+('photo14.jpg', 'Card Rap', 24, 'Descrição do card de música rap', 3, 14),
+('photo15.jpg', 'Card MPB', 32, 'Descrição do card de música MPB', 3, 15),
+('photo16.jpg', 'Card Indie', 28, 'Descrição do card de música indie', 3, 16),
+('photo17.jpg', 'Card Carnaval', 30, 'Descrição do card de música de carnaval', 3, 17);

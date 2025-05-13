@@ -51,10 +51,12 @@ const updateUser = async (req, res) => {
 
 const createUser = async (req, res) => {
     try {
-        const { name, email, photo} = req.body; // Não feito ainda a inclusão do photo por arquivo
+        const { name, email} = req.body; 
+        const photo = req.file ? req.file.filename : null;
         const user = await UserModel.createUsers(name, email, photo);
         res.status(201).json(user);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Erro ao criar o usuário." });
     }
 }
