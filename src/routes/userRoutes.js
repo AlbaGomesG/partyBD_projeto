@@ -5,7 +5,7 @@ const upload = require("../config/upload");
 
 router.get('/', userController.getAllUsers);
 router.get('/:id', userController.getUserById);
-router.post('/', upload.single("photo"), userController.createUser);
+router.post('/', upload.single("photo"), userController.register);
 router.put('/:id', userController.updateUser);
 router.delete('/:id', userController.deleteUser);
 

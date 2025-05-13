@@ -1,4 +1,5 @@
 const UserModel = require('../models/userModel');
+const pool = require("../config/database");
 
 const getAllUsers = async (req, res) => {
     try {
@@ -49,17 +50,26 @@ const updateUser = async (req, res) => {
     }
 }
 
-const createUser = async (req, res) => {
+
+const register = async (req, res) => {
+    const { name, email, senha } = req.body;
+    const photo = req.file ? req.file.filename : null;
+
     try {
-        const { name, email} = req.body; 
-        const photo = req.file ? req.file.filename : null;
-        const user = await UserModel.createUsers(name, email, photo);
-        res.status(201).json(user);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Erro ao criar o usuário." });
+      // Verifica se o email já existe
+      const check = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (check.rows.length > 0) {
+        return res.status(400).json({ message: 'Email já cadastrado' });
     }
-}
 
 
-module.exports = {getAllUsers, getUserById, deleteUser, updateUser, createUser};
+    const newUser = await UserModel.createUsers(name, email, photo, senha);
+    res.status(201).json(newUser);
+    } catch (error) {
+        console.error('Erro ao registrar usuário:', error);
+        res.status(500).json({ message: 'Erro interno no servidor' });
+    }
+};
+
+
+module.exports = {getAllUsers, getUserById, deleteUser, updateUser, register};
