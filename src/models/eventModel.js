@@ -26,10 +26,16 @@ const createEvent = async (name_evento, localization, atracao, estilo, horario_i
 };
 
 const deleteEvent = async (id) => {
-    const result = await pool.query("DELETE FROM events WHERE id = $1 RETURNING *", [id]);
+    const result = await pool.query("DELETE FROM eventos WHERE id = $1 RETURNING *", [id]);
+    return result.rows[0];
+};
+
+const updateEvent = async (id, name_evento, localization) => {
+    const result = await pool.query("UPDATE eventos SET name_evento = $1, localization = $2 WHERE id = $3 RETURNING *", [name_evento, localization, id]);
     return result.rows[0];
 };
 
 
-module.exports = {getEvents, getEvent, createEvent, deleteEvent};
+
+module.exports = {getEvents, getEvent, createEvent, deleteEvent, updateEvent};
 
