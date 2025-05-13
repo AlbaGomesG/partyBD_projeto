@@ -14,7 +14,7 @@ app.use("/api/posts", postsRoutes);
 app.use("/api/events", eventRoutes);
 
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3030;
 app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });

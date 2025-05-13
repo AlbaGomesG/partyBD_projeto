@@ -29,6 +29,10 @@ CREATE TABLE posts (
 );
 
 
+
+INSERT INTO eventos (name_evento, localization, atracao, estilo, horario_inicio, horario_fim)
+VALUES
+('Noite do Rock', 'Arena Musical', 'Banda Thunder', 'Rock', '21:00:00', '23:00:00');
 INSERT INTO eventos (name_evento, localization, atracao, estilo, horario_inicio, horario_fim)
 VALUES
 ('Festa Sunset', 'Praia do Sol', 'DJ Alex', 'Eletrônica', '16:00', '22:00'),
