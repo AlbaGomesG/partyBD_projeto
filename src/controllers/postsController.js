@@ -24,7 +24,8 @@ const getById = async (req, res) => {
 
 const createPost = async (req, res) => {
     try {
-        const { user_id, evento_id, content, image, data_postagem} = req.body;  // ainda não está feito a inclusão do photo por arquivo
+        const { user_id, evento_id, content, data_postagem} = req.body;
+        const image = req.file ? req.file.filename : null;
         const newPost = await PostModel.createPost(user_id, evento_id, content, image, data_postagem);
         res.status(201).json(newPost);
     } catch (error) {
