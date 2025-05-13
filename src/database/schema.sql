@@ -23,7 +23,7 @@ CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE SET NULL,
     evento_id INTEGER NOT NULL REFERENCES eventos(id) ON DELETE SET NULL,
-    image VARCHAR(250) NOT NULL,
+    image TEXT NOT NULL,
     content VARCHAR(300) NOT NULL,
     data_postagem DATE DEFAULT CURRENT_DATE
 );
