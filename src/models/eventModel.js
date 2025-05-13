@@ -15,4 +15,10 @@ const getEvent = async (id) => {
     return result.rows[0];
 };
 
-module.exports = {getEvents, getEvent};
+const createEvent = async (name_evento, localization, atracao, estilo, horario_inicio, horario_fim) => {
+    const result = await pool.query("INSERT INTO eventos (name_evento, localization, atracao, estilo, horario_inicio, horario_fim) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [name_evento, localization, atracao, estilo, horario_inicio, horario_fim]);
+    return result.rows[0];
+};
+
+
+module.exports = {getEvents, getEvent, createEvent};

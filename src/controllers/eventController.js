@@ -21,7 +21,21 @@ const getEventById = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar evento' });
     }
-}
+};
+
+const createEvent = async (req, res) => {
+    try {
+        const { name_evento, localization, atracao, estilo, horario_inicio, horario_fim } = req.body;
+        const event = await EventModel.createEvent(name_evento, localization, atracao, estilo, horario_inicio, horario_fim);
+        res.status(201).json(event);
+    } catch (error) {
+        console.error(error)
+        if (error.code === "23505") {
+            return res.status(400).json({ message: "Essa evento já existe!"});
+        }
+        res.status(500).json({ message: "Erro ao criar o evento" });
+    }
+};
 
 const deleteEvent = async (req, res) => {
     try {
@@ -47,16 +61,7 @@ const updateEvent = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: "Erro ao atualizar o evento" });
     }
-}
+};
 
-const createEvent = async (req, res) => {
-    try {
-        const { name_evento, localization, atracao, estilo, horario_inicio, horario_fim } = req.body;
-        const event = await EventModel.createEvents(name_evento, localization, atracao, estilo, horario_inicio, horario_fim);
-        res.status(201).json(event);
-    } catch (error) {
-        res.status(500).json({ message: "Erro ao criar o evento" });
-    }
-}
 
-module.exports = { getAllEvents, getEventById, deleteEvent, updateEvent, createEvent }
+module.exports = { getAllEvents, getEventById, createEvent }
