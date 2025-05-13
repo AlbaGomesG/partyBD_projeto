@@ -1,3 +1,4 @@
+
 const { rows } = require("pg/lib/defaults");
 const pool = require("../config/database");
 
@@ -10,6 +11,9 @@ const getEvents = async (estilo) => {
         return result.rows;
     }
 };
+
+
+module.exports = {getEvents};
 
 const getEvent = async (id) => {
     const result = await pool.query("SELECT * FROM eventos WHERE id = $1", [id]);
@@ -28,3 +32,4 @@ const deleteEvent = async (id) => {
 
 
 module.exports = {getEvents, getEvent, createEvent, deleteEvent};
+
