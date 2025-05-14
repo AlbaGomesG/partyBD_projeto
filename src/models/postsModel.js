@@ -18,7 +18,21 @@ const getPosts = async () => {
 };
 
 const getPostById = async (userId) => {
-    const result = await pool.query(`SELECT * FROM posts WHERE user_id = $1`, [userId]);
+    const result = await pool.query(
+        `SELECT 
+            posts.id,
+            posts.user_id,
+            posts.image,
+            posts.content,
+            posts.data_postagem,
+            eventos.name_evento AS evento_name, 
+            users.name AS usuario_name,
+            users.photo AS usuario_photo
+        FROM posts
+        LEFT JOIN eventos ON posts.evento_id = eventos.id 
+        LEFT JOIN users ON posts.user_id = users.id
+        WHERE posts.user_id = $1`,
+        [userId]);
     return result.rows;
 };
 const createPost = async (user_id, evento_id, content, image, data_postagem) => {
