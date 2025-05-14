@@ -12,12 +12,14 @@ const getAllPosts = async (req, res) => {
 
 const getById = async (req, res) => {
     try {
-        const post = await PostModel.getPostById(req.params.id);
+        const userId = req.user.id;
+        const post = await PostModel.getPostById(userId);
         if (!post) {
             return res.status(404).json({ error: 'Post não encontrado.' });
         }
         res.json(post);
     } catch (error) {
+        console.error('Erro ao buscar itens:', error);
         res.status(500).json({ error: 'Erro ao buscar post.' });
     }
 }

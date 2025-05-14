@@ -28,7 +28,7 @@ const login = async (req, res) => {
             { expiresIn: '1h' }
         );
 
-        res.json({ token });
+        return res.status(200).json({ token });
     } catch (err) {
         console.error('Erro no login:', err);
         res.status(500).json({ message: 'Erro interno do servidor' });
